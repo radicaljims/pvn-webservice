@@ -8,7 +8,7 @@ packages:
 - '.'
 
 # Packages to be pulled from upstream that are not in the resolver (e.g., acme-missiles-0.3)
-extra-deps: []
+extra-deps: [hasktags-0.69.1, structured-haskell-mode-1.0.20]
 
 # Override default flag values for local packages and extra-deps
 flags: {}
