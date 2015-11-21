@@ -1,8 +1,10 @@
-Download stack (and maybe Haskell for OSX as well): https://github.com/commercialhaskell/stack#how-to-install
+Download stack (and maybe Haskell for OSX as well):
 
-Clone repo
+https://github.com/commercialhaskell/stack#how-to-install
 
 ```bash
+git clone https://github.com/radicaljims/pvn-webservice.git
+
 stack setup
 
 stack build
