@@ -1,27 +1,51 @@
-1. Download stack (and maybe Haskell for OSX as well):
+1. Install Postgres
+
+  ```bash
+  brew install postgres
+  ```
+
+  (Don't do this part in tmux)
+  ```bash
+  launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+  ```
+
+2. Setup Postgres
+
+  ```bash
+  createuser --pwprompt pvn
+  ```
+
+  ```bash
+  createdb -Opvn -Eutf8 pvn
+  ```
+
+3. Download stack (and maybe Haskell for OSX as well):
+
+  ```bash
+  brew install haskell-stack
+  ```
 
   * https://github.com/commercialhaskell/stack#how-to-install
-  * https://ghcformacosx.github.io/
 
-2. Checkout the repository
+4. Checkout the repository
 
   ```bash
   git clone https://github.com/radicaljims/pvn-webservice.git
   ```
 
-3. Setup stack and build the project
+5. Setup stack and build the project
 
   ```bash
   stack setup && stack build
   ```
 
-4. Run the webservice
+6. Run the webservice
 
   ```bash
   stack exec pvn-webservice
   ```
 
-5. Poke it with curl or a browser
+7. Poke it with curl or a browser
 
   ```bash
   curl http://localhost:8081/users
