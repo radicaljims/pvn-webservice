@@ -12,11 +12,7 @@
 2. Setup Postgres
 
   ```bash
-  createuser --pwprompt pvn
-  ```
-
-  ```bash
-  createdb -Opvn -Eutf8 pvn
+  ./setup_postgres.sh
   ```
 
 3. Download stack (and maybe Haskell for OSX as well):
