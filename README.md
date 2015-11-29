@@ -42,14 +42,20 @@
   stack exec pvn-webservice
   ```
 
-7. Poke it with curl or a browser
+7. Add a dumb user
 
   ```bash
-  curl http://localhost:8081/users
+  ./add_user.sh
+  ```
+
+8. List the dumb users
+
+  ```bash
+  ./list_users.sh
   ```
 
 ```javascript
-[{"email":"hero@unikernel.com","registration_date":"2015-11-20","name":"Jim Sandridge"},{"email":"pooppoop@unicorn.com","registration_date":"2015-11-20","name":"Tim Ferrell"}]
+[{"email":"foo@foo.com","registrationDate":"2015-11-11","name":"foo"}]
 ```
 
 
