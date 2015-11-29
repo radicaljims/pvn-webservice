@@ -21,12 +21,14 @@ executable pvn-webservice
                      , either >= 4.4.1
                      , hlint
                      , monad-logger >= 0.3 && < 0.4
+                     , js-jquery
                      , mtl >= 2.1 && < 2.3
                      , persistent >= 2.2
                      , persistent-postgresql >= 2.2
                      , persistent-template
                      , servant
                      , servant-server
+                     , servant-jquery
                      , stylish-haskell
                      , text
                      , time

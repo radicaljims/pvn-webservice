@@ -1,40 +1,49 @@
-{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DataKinds     #-}
 {-# LANGUAGE TypeOperators #-}
 
 module Api where
 
-import Control.Monad.Reader         (ReaderT, runReaderT, lift)
-import Control.Monad.Trans.Either   (EitherT, left)
-import Network.Wai                  (Application)
-import Database.Persist.Postgresql  (insert, selectList, Entity(..)
-                                    ,fromSqlKey, (==.))
-import Data.Int                     (Int64)
-import Servant
+import           Control.Monad.Reader        (ReaderT, lift, runReaderT)
+import           Control.Monad.Trans.Either  (EitherT, left)
+import           Data.Int                    (Int64)
+import           Database.Persist.Postgresql (Entity (..), fromSqlKey, insert,
+                                              selectList, (==.))
+import           Network.Wai                 (Application)
+import           Servant
+import           Servant.JQuery
 
-import Config    (Config(..))
-import Models -- (Person, userToPerson, EntityField(UserName))
+import           Config                      (Config (..))
+import           Models
 
-type PersonAPI = 
+type PersonAPI =
          "users" :> Get '[JSON] [Person]
     :<|> "users" :> Capture "name" String :> Get '[JSON] Person
     :<|> "users" :> ReqBody '[JSON] Person :> Post '[JSON] Int64
+
+type API = PersonAPI :<|> Raw
 
 type AppM = ReaderT Config (EitherT ServantErr IO)
 
 userAPI :: Proxy PersonAPI
 userAPI = Proxy
 
-app :: Config -> Application
-app cfg = serve userAPI (readerServer cfg)
+api :: Proxy API
+api = Proxy
 
-readerServer :: Config -> Server PersonAPI
-readerServer cfg = enter (readerToEither cfg) server
+server :: ServerT PersonAPI AppM
+server = allPersons :<|> singlePerson :<|> createPerson
+
+www :: FilePath
+www = "content"
+
+readerServer :: Config -> Server API
+readerServer cfg = enter (readerToEither cfg) server :<|> serveDirectory www
 
 readerToEither :: Config -> AppM :~> EitherT ServantErr IO
 readerToEither cfg = Nat $ \x -> runReaderT x cfg
 
-server :: ServerT PersonAPI AppM
-server = allPersons :<|> singlePerson :<|> createPerson
+app :: Config -> Application
+app cfg = serve api (readerServer cfg)
 
 allPersons :: AppM [Person]
 allPersons = do
@@ -54,3 +63,6 @@ createPerson :: Person -> AppM Int64
 createPerson p = do
     newPerson <- runDb $ insert $ User (name p) (email p) (registrationDate p)
     return $ fromSqlKey newPerson
+
+apiJS :: String
+apiJS = jsForAPI userAPI
