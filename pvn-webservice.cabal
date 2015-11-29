@@ -17,12 +17,19 @@ executable pvn-webservice
   main-is:             Main.hs
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5
-                     , aeson
-                     , time
-                     , wai
-                     , warp
+                     , aeson >= 0.8 && < 0.10
+                     , either >= 4.4.1
+                     , hlint
+                     , monad-logger >= 0.3 && < 0.4
+                     , mtl >= 2.1 && < 2.3
+                     , persistent >= 2.2
+                     , persistent-postgresql >= 2.2
+                     , persistent-template
                      , servant
                      , servant-server
-                     , hlint
                      , stylish-haskell
-                       
+                     , text
+                     , time
+                     , wai >= 3.0 && < 3.1
+                     , wai-extra >= 3.0 && < 3.1
+                     , warp >= 3.1.2
