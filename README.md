@@ -9,13 +9,7 @@
   launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
   ```
 
-2. Setup Postgres
-
-  ```bash
-  ./setup_postgres.sh
-  ```
-
-3. Download stack (and maybe Haskell for OSX as well):
+2. Download stack (and maybe Haskell for OSX as well):
 
   ```bash
   brew install haskell-stack
@@ -23,10 +17,17 @@
 
   * https://github.com/commercialhaskell/stack#how-to-install
 
-4. Checkout the repository
+3. Checkout the repository
 
   ```bash
   git clone https://github.com/radicaljims/pvn-webservice.git
+  cd pvn-webservice
+  ```
+
+4. Setup Postgres
+
+  ```bash
+  ./setup_postgres.sh
   ```
 
 5. Setup stack and build the project
