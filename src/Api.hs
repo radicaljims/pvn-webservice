@@ -4,13 +4,14 @@
 module Api where
 
 import           Control.Monad.Reader        (ReaderT, lift, runReaderT)
-import           Control.Monad.Trans.Either  (EitherT, left)
+-- import           Control.Monad.Trans.Either  (EitherT, left)
+import           Control.Monad.Trans.Except  (ExceptT, throwE)
 import           Data.Int                    (Int64)
 import           Database.Persist.Postgresql (Entity (..), fromSqlKey, insert,
                                               selectList, (==.))
 import           Network.Wai                 (Application)
 import           Servant
-import           Servant.JQuery
+-- import           Servant.JQuery
 
 import           Config                      (Config (..))
 import           Models
@@ -22,7 +23,7 @@ type PersonAPI =
 
 type API = PersonAPI :<|> Raw
 
-type AppM = ReaderT Config (EitherT ServantErr IO)
+type AppM = ReaderT Config (ExceptT ServantErr IO)
 
 userAPI :: Proxy PersonAPI
 userAPI = Proxy
@@ -39,7 +40,7 @@ www = "content"
 readerServer :: Config -> Server API
 readerServer cfg = enter (readerToEither cfg) server :<|> serveDirectory www
 
-readerToEither :: Config -> AppM :~> EitherT ServantErr IO
+readerToEither :: Config -> AppM :~> ExceptT ServantErr IO
 readerToEither cfg = Nat $ \x -> runReaderT x cfg
 
 app :: Config -> Application
@@ -56,7 +57,7 @@ singlePerson str = do
     users <- runDb $ selectList [UserName ==. str] []
     let list = map (\(Entity _ y) -> userToPerson y) users
     case list of
-         []     -> lift $ left err404
+         []     -> lift $ throwE err404
          (x:xs) -> return x
 
 createPerson :: Person -> AppM Int64
@@ -64,5 +65,5 @@ createPerson p = do
     newPerson <- runDb $ insert $ User (name p) (email p) (registrationDate p)
     return $ fromSqlKey newPerson
 
-apiJS :: String
-apiJS = jsForAPI userAPI
+-- apiJS :: String
+-- apiJS = jsForAPI userAPI

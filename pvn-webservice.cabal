@@ -15,23 +15,28 @@ cabal-version:       >=1.10
 executable pvn-webservice
   hs-source-dirs:      src
   main-is:             Main.hs
+  other-modules:       Api Config Models
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5
-                     , aeson >= 0.8 && < 0.10
+                     , aeson >= 0.8 && < 0.12
                      , either >= 4.4.1
                      , hlint
                      , monad-logger >= 0.3 && < 0.4
-                     , js-jquery
+                     -- , js-jquery
                      , mtl >= 2.1 && < 2.3
                      , persistent >= 2.2
                      , persistent-postgresql >= 2.2
                      , persistent-template
                      , servant
                      , servant-server
-                     , servant-jquery
+                     , servant-client
+                     -- , servant >= 0.7
+                     -- , servant-server >= 0.7
+                     -- , servant-client >= 0.7
                      , stylish-haskell
                      , text
                      , time
-                     , wai >= 3.0 && < 3.1
-                     , wai-extra >= 3.0 && < 3.1
+                     , transformers >= 0.4
+                     , wai >= 3.0 && <= 3.2.1
+                     , wai-extra >= 3.0 && <= 3.2.1
                      , warp >= 3.1.2

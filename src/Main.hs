@@ -5,7 +5,8 @@ import System.Environment          (lookupEnv)
 import Database.Persist.Postgresql (runSqlPool)
 
 import Config (defaultConfig, Config(..), Environment(..), setLogger, makePool)
-import Api    (app, apiJS)
+import Api (app)
+-- import Api    (app, apiJS)
 import Models (doMigrations)
 
 -- import           Servant.JS
@@ -18,7 +19,7 @@ main = do
     -- writeJSForAPI userAPI (angular defAngularOptions) (www </> "angular" </> "api.js")
     -- writeServiceJS (www </> "angular" </> "api.service.js")
 
-    writeFile "content/api.js" apiJS
+    -- writeFile "content/api.js" apiJS
     env  <- lookupSetting "ENV" Development
     port <- lookupSetting "PORT" 8081
     pool <- makePool env

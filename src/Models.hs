@@ -50,16 +50,16 @@ data Person = Person
     } deriving (Eq, Show, Generic)
 
 
-instance FromJSON Day where
-    parseJSON = withText "Day" $ \t ->
-        case parseTime defaultTimeLocale "%F" (unpack t) of
-            Just d -> pure d
-            _      -> fail "could not parse ISO-8601 date"
+-- instance FromJSON Day where
+--     parseJSON = withText "Day" $ \t ->
+--         case parseTime defaultTimeLocale "%F" (unpack t) of
+--             Just d -> pure d
+--             _      -> fail "could not parse ISO-8601 date"
 
-instance ToJSON Day where
-    toJSON t = String $ pack $ formatTime defaultTimeLocale format t
-        where
-            format = "%F"
+-- instance ToJSON Day where
+--     toJSON t = String $ pack $ formatTime defaultTimeLocale format t
+--         where
+--             format = "%F"
 
 instance ToJSON Person
 instance FromJSON Person
